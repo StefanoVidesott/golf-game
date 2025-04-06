@@ -21,6 +21,6 @@ void TestScene::render(sf::RenderWindow* window) {
     window->draw(this->shape);
 }
 
-void TestScene::handleEvents() {
+void TestScene::handleEvents(std::optional<sf::Event>* event) {
 
 }

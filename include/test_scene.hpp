@@ -10,7 +10,7 @@ public:
     void init() override;
     void update() override;
     void render(sf::RenderWindow*) override;
-    void handleEvents() override;
+    void handleEvents(std::optional<sf::Event>*) override;
 
 private:
     sf::CircleShape shape;

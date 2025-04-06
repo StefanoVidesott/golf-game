@@ -10,5 +10,5 @@ public:
     virtual void init();
     virtual void update();
     virtual void render(sf::RenderWindow*);
-    virtual void handleEvents();
+    virtual void handleEvents(std::optional<sf::Event>*);
 };

@@ -14,9 +14,11 @@ public:
 
 private:
     sf::RenderWindow* window;
-    std::optional<sf::Event> event;
 
     std::queue<Scene*> scenes;
     Scene* currentScene;
 
+    void update();
+    void render();
+    void handleEvents();
 };

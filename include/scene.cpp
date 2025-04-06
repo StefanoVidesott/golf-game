@@ -3,7 +3,7 @@
 void Scene::init() {}
 void Scene::update() {}
 void Scene::render(sf::RenderWindow*) {}
-void Scene::handleEvents() {}
+void Scene::handleEvents(std::optional<sf::Event>*) {}
 
 Scene::Scene() {}
 Scene::~Scene() {}
