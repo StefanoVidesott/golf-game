@@ -1,5 +1,4 @@
 #pragma once
-
 #include "scene.hpp"
 
 class TestScene : public Scene {
@@ -8,11 +7,11 @@ public:
     ~TestScene();
 
     void init() override;
-    void update() override;
+    void update(float deltaTime) override;
     void render(sf::RenderWindow*) override;
-    void handleEvents(std::optional<sf::Event>*) override;
+    void handleEvents(const std::optional<sf::Event>&) override;
 
 private:
     sf::CircleShape shape;
-
+    float time = 0.f;
 };

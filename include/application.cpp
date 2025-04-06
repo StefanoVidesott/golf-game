@@ -1,71 +1,72 @@
 #include "application.hpp"
 
-Application::Application()
-{
-    this->window = new sf::RenderWindow(sf::VideoMode({200, 200}), "SFML works!");
-    this->currentScene = nullptr;
-    this->scenes = std::queue<Scene*>();
+Application::Application() {
+    this->window = new sf::RenderWindow(sf::VideoMode({800, 600}), "Improved SFML App");
+    this->deltaClock = sf::Clock();
+
+    // TODO Load settings from a config file
+    this->window->setFramerateLimit(60);
+    this->window->setVerticalSyncEnabled(true);
 }
 
-Application::~Application()
-{
-    delete this->window;
-    delete this->currentScene;
-    while (!scenes.empty()) {
-        delete scenes.front();
-        scenes.pop();
-    }
+Application::~Application() {
+    delete window;
 }
 
 void Application::loadScene(Scene* scene) {
-    this->scenes.push(scene);
-    this->currentScene = scene;
+    sceneManager.queueScene(scene);
 }
 
-void Application::dropScene(){
-    if (!this->scenes.empty())
-    {
-        delete this->scenes.front();
-        this->scenes.pop();
-        this->currentScene = this->scenes.front();
-    }
-}
-
-void Application::update()
-{
-    if (this->currentScene != nullptr) {
-        this->currentScene->update();
-    }
-}
-
-void Application::render()
-{
-    this->window->clear();
-    if (this->currentScene != nullptr) {
-        this->currentScene->render(this->window);
-    }
-    this->window->display();
-}
-
-void Application::handleEvents()
-{
-    while (std::optional<sf::Event> event = this->window->pollEvent())
-    {
+void Application::handleEvents() {
+    std::optional<sf::Event> event;
+    while (event = this->window->pollEvent()){
         if (event->is<sf::Event::Closed>()) {
-            this->window->close();
+            window->close();
         }
-        if (this->currentScene != nullptr) {
-            this->currentScene->handleEvents(&event);
+
+        Scene* scene = sceneManager.getCurrentScene();
+        if (scene) {
+            scene->handleEvents(event);
         }
     }
 }
 
-void Application::run()
-{
-    while (this->window->isOpen())
-    {
-        this->handleEvents();
-        this->update();
-        this->render();
+void Application::fixedUpdate() {
+    Scene* scene = sceneManager.getCurrentScene();
+    if (scene) scene->fixedUpdate(fixedStep);
+}
+
+void Application::update(float deltaTime) {
+    Scene* scene = sceneManager.getCurrentScene();
+    if (scene) {
+        scene->earlyUpdate(deltaTime);
+        scene->update(deltaTime);
+        scene->lateUpdate(deltaTime);
+    }
+}
+
+void Application::render() {
+    window->clear();
+    Scene* scene = sceneManager.getCurrentScene();
+    if (scene) scene->render(window);
+    window->display();
+}
+
+void Application::run() {
+    while (window->isOpen()) {
+        float deltaTime = deltaClock.restart().asSeconds();
+        if (deltaTime > 0.25f) deltaTime = 0.25f; // spike guard
+        accumulator += deltaTime;
+
+        handleEvents();
+
+        while (accumulator >= fixedStep) {
+            fixedUpdate();
+            accumulator -= fixedStep;
+        }
+
+        update(deltaTime);
+        render();
+        sceneManager.updateCurrentSceneInit();
     }
 }

@@ -8,7 +8,14 @@ public:
     virtual ~Scene();
 
     virtual void init();
-    virtual void update();
+    virtual void onEnter();
+    virtual void onExit();
+    virtual void handleEvents(const std::optional<sf::Event>&);
+    virtual void earlyUpdate(float deltaTime);
+    virtual void fixedUpdate(float fixedDeltaTime);
+    virtual void update(float deltaTime);
+    virtual void lateUpdate(float deltaTime);
     virtual void render(sf::RenderWindow*);
-    virtual void handleEvents(std::optional<sf::Event>*);
+
+    bool isInitialized = false;
 };
