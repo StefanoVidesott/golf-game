@@ -3,7 +3,9 @@
 Application::Application()
 {
     this->window = new sf::RenderWindow(sf::VideoMode({200, 200}), "SFML works!");
-    this->shape = sf::CircleShape(100.f);
+    this->currentScene = nullptr;
+
+    // this->loadScene(new TestScene);
 }
 
 Application::~Application()
@@ -11,20 +13,33 @@ Application::~Application()
     delete this->window;
 }
 
+void Application::loadScene(Scene* scene) {
+    this->scenes.push(scene);
+    this->currentScene = scene;
+}
+
+void Application::dropScene(){
+    this->scenes.pop();
+
+    Scene* dropped_scene = this->currentScene;
+    this->currentScene = this->scenes.front();
+}
+
 void Application::run()
 {
-    shape.setFillColor(sf::Color::Green);
-
     while (this->window->isOpen())
     {
         while (this->event = this->window->pollEvent())
         {
-            if (event->is<sf::Event::Closed>())
+            if (event->is<sf::Event::Closed>()) {
                 this->window->close();
+            }
         }
 
         this->window->clear();
-        this->window->draw(shape);
+        if (this->currentScene != nullptr) {
+            this->currentScene->render(this->window);
+        }
         this->window->display();
     }
 }
