@@ -1,16 +1,20 @@
 #include "application.hpp"
 
 Application::Application() {
-    this->window = new sf::RenderWindow(sf::VideoMode({800, 600}), "Improved SFML App");
-    this->deltaClock = sf::Clock();
-
-    // TODO Load settings from a config file
-    this->window->setFramerateLimit(60);
-    this->window->setVerticalSyncEnabled(true);
+    this->init();
 }
 
 Application::~Application() {
     delete window;
+}
+
+void Application::init() {
+    ResourceManager::init();
+    this->window = new sf::RenderWindow(sf::VideoMode({800, 600}), "Improved SFML App");
+
+    // TODO Load settings from a config file
+    this->window->setFramerateLimit(60);
+    this->window->setVerticalSyncEnabled(true);
 }
 
 void Application::loadScene(Scene* scene) {

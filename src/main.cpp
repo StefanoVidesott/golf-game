@@ -5,5 +5,6 @@ int main() {
     Application app;
     app.loadScene(new TestScene());
     app.run();
+
     return 0;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "resource_manager.hpp"
 
 class Scene {
 public:

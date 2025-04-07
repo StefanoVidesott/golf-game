@@ -18,6 +18,7 @@ private:
     float fixedStep = 1.f / 60.f;
     float accumulator = 0.f;
 
+    void init();
     void handleEvents();
     void update(float deltaTime);
     void fixedUpdate();
