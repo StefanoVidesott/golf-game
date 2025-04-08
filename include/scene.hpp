@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "resource_manager.hpp"
+#include "entity.hpp"
 
 class Scene {
 public:
@@ -19,4 +20,6 @@ public:
     virtual void render(sf::RenderWindow*);
 
     bool isInitialized = false;
+protected:
+    std::vector<std::unique_ptr<Entity>> entities;
 };

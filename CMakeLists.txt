@@ -28,6 +28,6 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp include/scene.cpp include/scene_manager.cpp include/resource_manager.cpp include/test_scene.cpp include/application.cpp)
+add_executable(main src/main.cpp include/scene.cpp include/scene_manager.cpp include/components/sprite_component.cpp include/entity.cpp include/resource_manager.cpp include/test_scene.cpp include/application.cpp)
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics SFML::Audio)
