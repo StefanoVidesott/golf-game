@@ -1,6 +1,6 @@
 #include "test_scene.hpp"
 #include <cmath>
-#include "components/sprite_component.hpp"
+#include "../entities/components/sprite_component.hpp"
 
 TestScene::TestScene() {}
 TestScene::~TestScene() {}

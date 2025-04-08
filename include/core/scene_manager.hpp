@@ -1,5 +1,5 @@
 #pragma once
-#include "scene.hpp"
+#include "../scenes/scene.hpp"
 #include <queue>
 
 class SceneManager {

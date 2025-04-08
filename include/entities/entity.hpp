@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "component.hpp"
+#include "components/component.hpp"
 
 class Entity {
 public:

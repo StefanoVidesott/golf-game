@@ -1,5 +1,5 @@
-#include "../include/application.hpp"
-#include "../include/test_scene.hpp"
+#include "../include/core/application.hpp"
+#include "../include/scenes/test_scene.hpp"
 
 int main() {
     Application app;

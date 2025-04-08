@@ -1,5 +1,5 @@
 #pragma once
-#include "../component.hpp"
+#include "component.hpp"
 #include <SFML/Graphics.hpp>
 
 class SpriteComponent : public Component {
